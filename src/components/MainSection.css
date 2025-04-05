@@ -1,0 +1,19 @@
+#about {
+    background-color: #d4d4d4;
+    text-align: center;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+#about ul {
+    list-style-position: inside;
+    list-style-type: "-";
+    padding-left: 0px;
+    margin-top: 10px;
+}
+
+ #about li {
+    text-align: center;
+    margin-bottom: 10px;
+}
