@@ -64,5 +64,11 @@ def get_testimonials():
         testimonials = json.load(f)
     return jsonify(random.sample(testimonials, 2))
 
+@app.route("/courses", methods=["GET"])
+def get_courses():
+    with open("courses.json") as f:
+        courses = json.load(f)
+    return jsonify(courses)
+
 if __name__ == "__main__":
     app.run(debug=True)
