@@ -1,0 +1,124 @@
+#signup-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  
+  #signup-main h2 {
+    color: #003366;
+    margin-bottom: 30px;
+  }
+  
+  #signup {
+    background-color: #d4d4d4;
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 8px 8px 25px lightgray;
+  }
+  
+  #signup label {
+    display: block;
+    font-weight: 500;
+    margin: 15px 0 5px;
+    text-align: center;
+    width: 100%;
+  }
+  
+  #signup input {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: #ffffe0;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    max-width: 400px;
+  }
+  
+  #signup form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  #signup-main button {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 6px;
+    padding: 10px 25px;
+    border: none;
+    font-weight: bold;
+    font-size: 1em;
+    margin-top: 20px;
+    opacity: 0.5;
+    cursor: pointer;
+  }
+  
+  #signup-main button:hover {
+    background-color: #45A049;
+    opacity: 1;
+  }
+  
+  #signup-main a {
+    margin-top: 20px;
+    color: #004080;
+    text-decoration: none;
+    font-size: 0.95em;
+    text-align: center;
+    display: block;
+  }
+  
+  #signup-main a:hover {
+    text-decoration: underline;
+  }
+  
+  .error-text {
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+    text-align: center;
+  }
+  
+  #signup-message {
+    background-color: white;
+    border: 1px solid #999;
+    padding: 10px;
+    width: 70%;
+    margin: 10px auto;
+    text-align: center;
+  }
+  
+  #signup-login-link {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  #signup-login-link a {
+    color: #004080;
+    text-decoration: none;
+    font-size: 0.95em;
+  }
+  
+  #signup-login-link a:hover {
+    text-decoration: underline;
+  }
+  
+  #signup-error-box {
+    background-color: white;
+    border: 1px solid #999;
+    padding: 10px 20px;
+    width: 90%;
+    margin: 20px auto 10px auto;
+    text-align: center;
+  }
+  
+  #signup-error-box ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  

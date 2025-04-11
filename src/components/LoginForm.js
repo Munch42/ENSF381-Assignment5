@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import AuthMessage from "./AuthMessage";
 import "./LoginForm.css";
 
@@ -28,18 +28,22 @@ function LoginForm() {
     }
 
     try {
-      const res = await fetch("https://jsonplaceholder.typicode.com/users");
-      const users = await res.json();
-      const validUser = users.find(
-        (user) => user.username === username && user.email === password
-      );
+      const res = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
 
-      if (validUser) {
+      const data = await res.json();
+
+      if (res.ok) {
         setStatusType("success");
         setStatusMessage("Login successful! Redirecting to Courses...");
+        // Optionally store user ID or token here: data.student_id
+        setTimeout(() => navigate("/courses"), 2000);
       } else {
         setStatusType("error");
-        setStatusMessage("Invalid credentials. Please try again.");
+        setStatusMessage(data.message || "Invalid credentials.");
       }
     } catch (err) {
       setStatusType("error");
@@ -47,13 +51,6 @@ function LoginForm() {
     }
   };
 
-  useEffect(() => {
-    if (statusType === "success") {
-      const timer = setTimeout(() => {navigate("/courses");}, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [statusType, navigate]);
-  
   return (
     <AuthContext.Provider value={{ statusType, statusMessage }}>
       <div id="login-main">
@@ -83,13 +80,14 @@ function LoginForm() {
             </div>
 
             <a href="#">Forgot Password?</a>
+            <Link to="/signup">Don't have an account? Sign up here</Link>
           </form>
         </div>
-        <br></br>
+        <br />
         <AuthMessage /> 
       </div>
     </AuthContext.Provider>
   );
-};
+}
 
 export default LoginForm;

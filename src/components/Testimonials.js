@@ -1,46 +1,30 @@
-import { useState, useEffect } from "react";
-import testimonials from "../data/testimonials";
+import React, { useEffect, useState } from "react";
 import "./Testimonials.css";
 
-function Testimonials() {  
-    const [testimonialList, setTestimonialList] = useState([]);
+function Testimonials() {
+  const [testimonials, setTestimonials] = useState([]);
 
-    useEffect(() => {
-        // We create a set (so that only one of each element can be in it) and
-        // then add items until we get 2 testimonials
-        const testimonialIndices = new Set();
+  useEffect(() => {
+    fetch("http://localhost:5000/testimonials")
+      .then((res) => res.json())
+      .then((data) => setTestimonials(data))
+      .catch((err) => console.error("Error fetching testimonials:", err));
+  }, []);
 
-        while(testimonialIndices.size !== 2) {
-            testimonialIndices.add(Math.floor(Math.random() * testimonials.length));
-        }
-
-        let tempTestimonialList = [];
-
-        let i = 0;
-        testimonialIndices.forEach((testimonialIndex) => {
-            tempTestimonialList[i] = testimonials[testimonialIndex];
-            i++;
-        });
-
-        setTestimonialList(tempTestimonialList);
-    }, []);
-
-    return (
+  return (
     <div className="featured-testimonials">
-        <h2>Testimonials</h2>
-        <div className="testimonial-list">
-            {testimonialList.map(function(item) {
-                return (
-                    <div className="testimonial-item"> 
-                        <h3>{item.studentName}</h3>
-                        <p>{item.review}</p>
-                        <p>{"★".repeat(item.rating)}{"☆".repeat(5 - item.rating)}</p>
-                    </div>
-                );
-            })}
-        </div>
+      <h2>Testimonials</h2>
+      <div className="testimonial-list">
+        {testimonials.map((t, index) => (
+          <div className="testimonial-item" key={index}>
+            <h3>{t.studentName}</h3>
+            <p>“{t.review}”</p>
+            {"★".repeat(Math.round(t.rating))}{"☆".repeat(5 - Math.round(t.rating))}
+          </div>
+        ))}
+      </div>
     </div>
-    );        
+  );
 }
 
 export default Testimonials;
