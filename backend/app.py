@@ -80,15 +80,29 @@ def enroll(student_id):
     image = data.get("image")
 
     for student in students:
-        if student.get("id") == student_id:
-            student["enrolled_courses"] = {id: id, name: name, instructor: instructor, description: description, duration: duration, image: image}
+        if student.get("id") == int(student_id):
+            if any(course.get("id") == id for course in student["enrolled_courses"]):
+                return jsonify({
+                    "message": "Already enrolled in this course"
+                }), 400
+            
+            course = {
+                "id": id,
+                "name": name,
+                "instructor": instructor,
+                "description": description,
+                "duration": duration,
+                "image": image
+            }
+            student["enrolled_courses"].append(course)
+            
             return jsonify({
                 "message": "Successfully Enrolled in Course",
             }), 200
             
-        return jsonify({
-            "message": "Error enrolling in course!"
-        }), 500
+    return jsonify({
+        "message": "Error enrolling in course!"
+    }), 500
 
 @app.route("/drop/<student_id>", methods=["DELETE"])
 def drop_course(student_id):
@@ -96,21 +110,21 @@ def drop_course(student_id):
     course_id = data.get("id")
 
     for student in students:
-        if student["id"] == student_id:
+        if student["id"] == int(student_id):
             new_enrolled_courses = [course for course in student["enrolled_courses"] if course["id"] != course_id]
             student["enrolled_courses"] = new_enrolled_courses
             return jsonify({
                 "message": "Succesfully dropped course."
             }), 200
         
-        return jsonify({
-            "message": "Error dropping course!"
-        }), 500
+    return jsonify({
+        "message": "Error dropping course!"
+    }), 500
     
 @app.route("/student_courses/<student_id>", methods=["GET"])
 def get_student_courses(student_id):
     for student in students:
-        if student["id"] == student_id:
+        if student["id"] == int(student_id):
             return jsonify({
                 "enrolled_courses": student["enrolled_courses"]
             }), 200

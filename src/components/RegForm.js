@@ -18,7 +18,7 @@ function RegForm() {
     const newErrors = {};
     const usernameRegex = /^[A-Za-z][A-Za-z0-9_-]{2,19}$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\[\]{}|;:'",.<>?/`~]).{8,}$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.(com|net|io)$/i;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.(com|net|io|ca|me)$/i;
   
     if (!usernameRegex.test(formData.username)) {
       newErrors.username = "Username must start with a letter and be 3–20 characters (letters, numbers, _ or - allowed)";

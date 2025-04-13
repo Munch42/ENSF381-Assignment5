@@ -1,29 +1,34 @@
 import { useState } from "react";
 import "./CourseItem.css";
 
-function CourseItem({ imageName, courseName, instructorName, description }) {
+function CourseItem({ id, duration, imageName, courseName, instructorName, description }) {
   const [displayDescription, setDisplayDescription] = useState(false);
 
-  const handleEnroll = () => {
-    const stored = localStorage.getItem("enrolledCourses");
-    let enrolled = stored ? JSON.parse(stored) : [];
+  const handleEnroll = async () => {
+    const student_id = localStorage.getItem("student_id");
+    
+    const course = {
+      id: id,
+      name: courseName,
+      instructor: instructorName,
+      image: imageName,
+      description: description,
+      duration: duration
+    };
 
-    const alreadyEnrolled = enrolled.some((c) => c.name === courseName);
-    if (!alreadyEnrolled) {
-      const course = {
-        id: courseName,
-        name: courseName,
-        instructor: instructorName,
-        image: imageName,
-        description
-      };
-      enrolled.push(course);
-      localStorage.setItem("enrolledCourses", JSON.stringify(enrolled));
-      alert("You have been enrolled");
+    const res = await fetch(`http://localhost:5000/enroll/${student_id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(course)
+    });
+
+    const data = await res.json();
+    
+    if (res.ok) {
+      alert(data.message);
       window.location.reload();
-      
     } else {
-      alert("You are already enrolled in this course.");
+      alert(data.message);
     }
   };
 

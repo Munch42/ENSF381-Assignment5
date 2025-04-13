@@ -39,7 +39,7 @@ function LoginForm() {
       if (res.ok) {
         setStatusType("success");
         setStatusMessage("Login successful! Redirecting to Courses...");
-        // Optionally store user ID or token here: data.student_id
+        localStorage.setItem("student_id", JSON.stringify(data.student_id));
         setTimeout(() => navigate("/courses"), 2000);
       } else {
         setStatusType("error");
