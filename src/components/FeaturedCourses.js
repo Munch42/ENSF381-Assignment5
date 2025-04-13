@@ -1,15 +1,24 @@
 import { useState, useEffect } from "react";
-import courses from "../data/courses";
 import "./FeaturedCourses.css";
 
-function FeaturedCourses() {  
+function FeaturedCourses() { 
+    const [courses, setCourses] = useState([]); 
     const [courseList, setCourseList] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:5000/courses")
+        .then((res) => res.json())
+        .then((data) => {
+            setCourses(data); console.log(data)})
+        .catch((err) => console.error("Error fetching courses:", err));
+    }, []);
 
     useEffect(() => {
         // We create a set (so that only one of each element can be in it) and
         // then add items until we get 3 courses 
         const courseIndices = new Set();
 
+        if (courses.length == 0) return;
         while(courseIndices.size !== 3) {
             courseIndices.add(Math.floor(Math.random() * courses.length));
         }
@@ -24,7 +33,7 @@ function FeaturedCourses() {
         });
 
         setCourseList(tempCourseList);
-    }, []);
+    }, [courses]);
 
     return (
     <div className="featured-courses">
