@@ -19,26 +19,27 @@ function RegForm() {
     const usernameRegex = /^[A-Za-z][A-Za-z0-9_-]{2,19}$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\[\]{}|;:'",.<>?/`~]).{8,}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.(com|net|io)$/i;
-
+  
     if (!usernameRegex.test(formData.username)) {
-      newErrors.username = 'Invalid username (Reason...)';
+      newErrors.username = "Username must start with a letter and be 3–20 characters (letters, numbers, _ or - allowed)";
     }
-
+  
     if (!passwordRegex.test(formData.password)) {
-      newErrors.password = 'Invalid password (Reason...)';
+      newErrors.password = "Password must be at least 8 characters and include uppercase, lowercase, number, and special character";
     }
-
+  
     if (formData.confirmPassword !== formData.password) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = "Passwords do not match.";
     }
-
+  
     if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Invalid email (Reason...)';
+      newErrors.email = "Invalid Email Format";
     }
-
+  
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
